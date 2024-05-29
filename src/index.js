@@ -1,17 +1,56 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import ProductListShop from "./components/Shop/ProductList";
+import ProductListAdmin from "./components/Admin/ProductLIst";
+import Success from "./components/Success/Success";
+import LogIn from "./components/Login/Login";
+import NotFound from "./components/NotFound/NotFound";
+import ContactUs from "./components/ContactUs/ContactUs";
+import AddProduct from "./components/Admin/AddProduct";
+import Admin from "./components/Admin/Admin";
+import SendMessage from "./components/SendMessage/SendMessage";
+import Shop from "./components/Shop/Shop";
+import Cart from "./components/Cart/Cart";
+import Order from "./components/Order/Order";
+import ProductDetail from "./components/Shop/ProductDetail";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./store/index";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      { path: "", element: <Shop /> },
+      { path: "product/:productId", element: <ProductDetail /> },
+      { path: "products", element: <ProductListShop /> },
+      { path: "cart", element: <Cart /> },
+      { path: "orders", element: <Order /> },
+      { path: "login", element: <LogIn /> },
+      { path: "contact-us", element: <ContactUs /> },
+      { path: "success", element: <Success /> },
+      { path: "message", element: <SendMessage /> },
+      { path: "*", element: <NotFound /> },
+      {
+        path: "admin",
+        element: <Admin />,
+        children: [
+          { path: "", element: <NotFound /> },
+          { path: "add-product", element: <AddProduct /> },
+          { path: "products", element: <ProductListAdmin /> },
+          { path: "edit-product/:id", element: <NotFound /> },
+        ],
+      },
+    ],
+  },
+]);
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
