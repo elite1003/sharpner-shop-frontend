@@ -70,6 +70,14 @@ const Header = () => {
               LogIn
             </NavLink>
           </li>
+          <li className={styles["main-header__item"]}>
+            <NavLink
+              to="/signup"
+              className={({ isActive }) => (isActive ? styles["active"] : "")}
+            >
+              SignUp
+            </NavLink>
+          </li>
         </ul>
       </nav>
     </header>

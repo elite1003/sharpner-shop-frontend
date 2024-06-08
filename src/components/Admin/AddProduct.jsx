@@ -1,26 +1,34 @@
 import React from "react";
 import styles from "./AddProduct.module.css";
 import { useNavigate } from "react-router-dom";
-
+import { productActions } from "../../store/productSlice";
+import { useDispatch } from "react-redux";
 const AddProduct = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const jwt = localStorage.getItem("jwt");
   const handleSendProduct = async (e) => {
     e.preventDefault();
-    const title = e.target.productName.value;
-    const imageUrl = e.target.imageUrl.value;
+    const productName = e.target.productName.value;
+    const imageURL = e.target.imageUrl.value;
     const description = e.target.description.value;
     const price = e.target.price.value;
-    const data = { title, imageUrl, description, price };
-    const response = await fetch("http://localhost:4000/admin/add-product", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-type": "application/json",
-      },
-    });
-    if (!response.ok) {
-      console.log("failed to sent the data");
+    try {
+      const product = { productName, imageURL, description, price };
+      const response = await fetch("http://localhost:4000/admin/product", {
+        method: "POST",
+        body: JSON.stringify({ product }),
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
+      const data = await response.json();
+      dispatch(productActions.addProduct({ _id: data._id, ...product }));
+    } catch (error) {
+      console.log(error.message);
     }
+
     navigate("/");
   };
   return (

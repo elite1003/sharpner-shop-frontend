@@ -1,13 +1,20 @@
 import { productActions } from "./productSlice";
 
 export const fetchProducts = () => {
+  console.log("fetchProducts");
   return async (dispatch) => {
+    const jwt = localStorage.getItem("jwt");
     const fetchData = async () => {
-      const response = await fetch("http://localhost:4000/shop/products");
-      if (!response.ok) {
-        throw new Error("Could not fetch product data!");
-      }
+      const response = await fetch("http://localhost:4000/shop/products", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
       const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
       return data;
     };
 

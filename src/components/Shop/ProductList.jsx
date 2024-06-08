@@ -5,12 +5,12 @@ import { useSelector } from "react-redux";
 const ProductList = () => {
   const products = useSelector((state) => state.product.products);
   const listOfProduct = products.map((product) => (
-    <Product key={product.id} product={product} />
+    <Product key={product._id} product={product} />
   ));
   return (
     <main>
       <section>
-        {products.length > 0 ? listOfProduct : <h1>No product found</h1>}
+        {products?.length > 0 ? listOfProduct : <h1>No product found</h1>}
       </section>
     </main>
   );
