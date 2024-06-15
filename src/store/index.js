@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import { thunk } from "redux-thunk";
 import productSlice from "./productSlice";
+import cartSlice from "./cartSlice";
 const store = configureStore({
   reducer: {
     product: productSlice.reducer,
+    cart: cartSlice.reducer,
   },
-  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });
 
 export default store;

@@ -10,7 +10,7 @@ const Product = ({ product }) => {
   const handleProductDelete = async () => {
     try {
       const response = await fetch(
-        `http://localhost:4000/admin/product/${product._id}`,
+        `http://localhost:4000/admin/product/${product.id}`,
         {
           method: "DELETE",
           headers: {
@@ -19,8 +19,15 @@ const Product = ({ product }) => {
           },
         }
       );
+
       if (response.ok) {
-        dispatch(productActions.deleteProduct(product._id));
+        dispatch(productActions.deleteProduct(product.id));
+      } else {
+        if (response.status === 404) {
+          console.log("product not found");
+        } else if (response.status === 500) {
+          console.log("internal server error");
+        }
       }
     } catch (error) {
       console.log(error);
@@ -40,7 +47,7 @@ const Product = ({ product }) => {
       </div>
       <div className="card__actions">
         <NavLink
-          to={`/admin/edit-product/${product._id}`}
+          to={`/admin/edit-product/${product.id}`}
           className="btn"
           style={{ textDecoration: "none" }}
         >

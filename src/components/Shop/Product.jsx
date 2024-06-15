@@ -1,9 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "./Product.css";
+import { useDispatch } from "react-redux";
+import { cartActions } from "../../store/cartSlice";
 
 const Product = ({ product }) => {
-  console.log("shop product");
+  const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt");
   const handleAddCart = async (productId) => {
     const response = await fetch("http://localhost:4000/shop/cart", {
@@ -15,8 +17,12 @@ const Product = ({ product }) => {
       },
     });
     const data = await response.json();
-    console.log(data.product);
+    if (data) {
+      //update the cart
+      dispatch(cartActions.addProductInCart(product));
+    }
   };
+
   return (
     <article className="card product-item">
       <header className="card__header">
@@ -31,7 +37,7 @@ const Product = ({ product }) => {
       </div>
       <div className="card__actions">
         <NavLink
-          to={`/product/${product._id}`}
+          to={`/product/${+product.id}`}
           className="btn"
           style={{ textDecoration: "none" }}
         >
@@ -40,7 +46,7 @@ const Product = ({ product }) => {
         <button
           className="btn"
           type="button"
-          onClick={() => handleAddCart(product._id)}
+          onClick={() => handleAddCart(product.id)}
         >
           Add to Cart
         </button>

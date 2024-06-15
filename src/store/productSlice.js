@@ -13,15 +13,15 @@ const productSlice = createSlice({
       state.products.push(action.payload);
     },
     updateProduct(state, action) {
-      const productId = action.payload._id;
+      const productId = action.payload.id;
       const existingProductIndex = state.products.findIndex(
-        (p) => p._id === productId
+        (p) => p.id === productId
       );
       state.products[existingProductIndex] = action.payload;
     },
     deleteProduct(state, action) {
       const productId = action.payload;
-      state.products = state.products.filter((p) => p._id !== productId);
+      state.products = state.products.filter((p) => p.id !== productId);
     },
   },
 });

@@ -17,16 +17,20 @@ const SignUp = () => {
         userEmail,
         userPassword,
       };
-      const response = await fetch("http://localhost:4000/auth/signup", {
-        method: "POST",
-        body: JSON.stringify(user),
-        headers: {
-          "Content-type": "application/json",
-        },
-      });
-      const data = await response.json();
-      console.log(data);
-      navigate("/login");
+      try {
+        const response = await fetch("http://localhost:4000/auth/signup", {
+          method: "POST",
+          body: JSON.stringify(user),
+          headers: {
+            "Content-type": "application/json",
+          },
+        });
+        if (response.ok) {
+          navigate("/login");
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
     }
   };
 

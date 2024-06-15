@@ -1,10 +1,10 @@
-import { productActions } from "./productSlice";
+import { cartActions } from "./cartSlice";
 
-export const fetchProducts = () => {
+export const fetchCart = () => {
   return (dispatch) => {
     const jwt = localStorage.getItem("jwt");
     const fetchData = async () => {
-      const response = await fetch("http://localhost:4000/shop/products", {
+      const response = await fetch("http://localhost:4000/shop/cart", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${jwt}`,
@@ -18,7 +18,7 @@ export const fetchProducts = () => {
     };
 
     fetchData()
-      .then((productData) => dispatch(productActions.init(productData)))
+      .then((products) => dispatch(cartActions.init(products)))
       .catch((err) => console.log(err));
   };
 };

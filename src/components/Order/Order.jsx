@@ -5,7 +5,7 @@ const Order = () => {
     <main>
       <section>
         <header>
-          <h1>Orders</h1>
+          <h1>order</h1>
         </header>
       </section>
     </main>
