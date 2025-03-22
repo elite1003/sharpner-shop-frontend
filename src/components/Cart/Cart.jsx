@@ -25,6 +25,23 @@ const Cart = () => {
       console.log(error);
     }
   };
+  const handleOrder = async () => {
+    try {
+      const response = await fetch(`http://localhost:4000/shop/order`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
+      const data = await response.json();
+      if (data) {
+        console.log(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <main>
       <section>
@@ -43,6 +60,11 @@ const Cart = () => {
             </li>
           ))}
         </ul>
+      </section>
+      <section>
+        <button type="button" className="btn centered" onClick={handleOrder}>
+          Order Now
+        </button>
       </section>
     </main>
   );

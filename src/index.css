@@ -82,3 +82,7 @@ section {
   background-color: #023047;
   color: white;
 }
+
+.centered {
+  margin: auto;
+}
